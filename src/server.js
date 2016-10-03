@@ -33,8 +33,9 @@ import createHistory from './core/createHistory';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
-import Provide from './components/Provide';
 import { setLocale } from './actions/intl';
+import { filterChange } from './actions/filter';
+import Provide from './components/Provide';
 import { port, auth, locales, pageOptions, endpoint, headers } from './config';
 
 const app = express();
@@ -199,9 +200,8 @@ app.get('*', async (req, res, next) => {
 
       // now set results to redux store
       return result.then((pageData) => {
-        store.dispatch(setRuntimeVariable({
-          name: 'pageOptions',
-          value: filledOptions,
+        store.dispatch(filterChange({
+          pages: filledOptions,
         }));
         return resolve(pageData);
       }).catch((err) => reject(err));

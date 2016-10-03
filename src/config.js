@@ -58,6 +58,7 @@ export const pageOptions = {
       {
         enum: 'positionTypes',
         data: [],
+        defaultValue: -99,
       },
     ],
   },

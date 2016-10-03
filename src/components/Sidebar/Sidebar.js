@@ -1,4 +1,5 @@
 import React from 'react';
+import { defineMessages, FormattedMessage, injectIntl } from 'react-intl';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Sidebar.css';
 import Link from '../Link';
@@ -30,6 +31,34 @@ const linkStyle = {
   fontSize: '14px',
 };
 
+const messages = defineMessages({
+  analyse: {
+    id: 'sidebar.analyse',
+    defaultMessage: 'ANALYSE',
+    description: 'Subheader of analyse section of sidebar',
+  },
+  tracking: {
+    id: 'sidebar.tracking',
+    defaultMessage: 'Tracking',
+    description: 'Tracking menu item of sidebar',
+  },
+  heatmap: {
+    id: 'sidebar.heatmap',
+    defaultMessage: 'Heatmap',
+    description: 'Heatmap menu item of sidebar',
+  },
+  user: {
+    id: 'sidebar.user',
+    defaultMessage: 'USER',
+    description: 'Subheader of user section of sidebar',
+  },
+  logout: {
+    id: 'sidebar.logout',
+    defaultMessage: 'Logout',
+    description: 'Logout text',
+  },
+});
+
 function Sidebar() {
   return (
     <div className={s.root}>
@@ -47,23 +76,23 @@ function Sidebar() {
           />
         </Card>
         <List>
-          <Subheader style={subheaderStyle}>ANALYSE</Subheader>
+          <Subheader style={subheaderStyle}><FormattedMessage {...messages.analyse} /></Subheader>
           <MenuItem
             containerElement={<Link to="/tracking" />}
             style={linkStyle}
             className={s.menuItem}
-            leftIcon={<TrackingIcon color={'white'} />}>Tracking</MenuItem>
+            leftIcon={<TrackingIcon color={'white'} />}><FormattedMessage {...messages.tracking} /></MenuItem>
           <MenuItem
             containerElement={<Link to="/heatmap" />}
             style={linkStyle}
             className={s.menuItem}
-            leftIcon={<HeatmapIcon color={'white'} />}>Heatmap</MenuItem>
-          <Subheader style={subheaderStyle}>USER</Subheader>
+            leftIcon={<HeatmapIcon color={'white'} />}><FormattedMessage {...messages.heatmap} /></MenuItem>
+          <Subheader style={subheaderStyle}><FormattedMessage {...messages.user} /></Subheader>
           <MenuItem
             containerElement={<Link to="/login" />}
             style={linkStyle}
             className={s.menuItem}
-            leftIcon={<LogoutIcon color={'white'} />}>Logout</MenuItem>
+            leftIcon={<LogoutIcon color={'white'} />}><FormattedMessage {...messages.logout} /></MenuItem>
         </List>
         <LanguageSwitcher />
       </Drawer>
@@ -71,4 +100,4 @@ function Sidebar() {
   );
 }
 
-export default withStyles(s)(Sidebar);
+export default injectIntl(withStyles(s)(Sidebar));

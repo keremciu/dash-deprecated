@@ -70,5 +70,50 @@
     "files": [
       "src/components/Navigation/Navigation.js"
     ]
+  },
+  {
+    "id": "sidebar.analyse",
+    "description": "Subheader of analyse section of sidebar",
+    "defaultMessage": "ANALYSE",
+    "message": "ANALİZ",
+    "files": [
+      "src/components/Sidebar/Sidebar.js"
+    ]
+  },
+  {
+    "id": "sidebar.logout",
+    "description": "Logout text",
+    "defaultMessage": "Logout",
+    "message": "Çıkış",
+    "files": [
+      "src/components/Sidebar/Sidebar.js"
+    ]
+  },
+  {
+    "id": "sidebar.user",
+    "description": "Subheader of user section of sidebar",
+    "defaultMessage": "USER",
+    "message": "KULLANICI",
+    "files": [
+      "src/components/Sidebar/Sidebar.js"
+    ]
+  },
+  {
+    "id": "sidebar.heatmap",
+    "description": "Heatmap menu item of sidebar",
+    "defaultMessage": "Heatmap",
+    "message": "Sıcaklık Haritası",
+    "files": [
+      "src/components/Sidebar/Sidebar.js"
+    ]
+  },
+  {
+    "id": "sidebar.tracking",
+    "description": "Tracking menu item of sidebar",
+    "defaultMessage": "Tracking",
+    "message": "Kullanıcı İzleme",
+    "files": [
+      "src/components/Sidebar/Sidebar.js"
+    ]
   }
 ]

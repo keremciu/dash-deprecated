@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -6,25 +7,29 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { SelectField, MenuItem, TextField } from 'material-ui';
 import s from './Tracking.css';
 import Map from '../../components/Map/Map.js';
-import FilterSelect from '../../components/FilterSelect/FilterSelect.js';
 import { filterChange } from '../../actions/filter';
 
 const title = 'Tracking';
+const page = 'tracking';
 
-function Tracking(props, context) {
+function Tracking({filters, maps, tracking, filterChange}, context) {
   context.setTitle(title);
   return (
     <div className={s.root}>
       <div className={s.container}>
         <h2 className="font-light text-center">Showing tracking data for</h2>
-        {props.filters.map(filter => (
+        {filters.map(filter => (
           <SelectField
+            onChange={(event, key, value) => {
+              filterChange({ filter, value, page });
+              event.preventDefault();
+            }}
             value={filter.defaultValue !== undefined ? filter.defaultValue : -99}
             style={{ marginLeft: '20px', width: 'auto' }}
           >
-          {filter.data.map(option => (
-            <MenuItem value={option.value} primaryText={option.text} />
-          ))}
+            {filter.data.map(option => (
+              <MenuItem value={option.value} primaryText={option.text} />
+            ))}
           </SelectField>
         ))}
         <TextField
@@ -32,10 +37,10 @@ function Tracking(props, context) {
           hintText="duration value"
           floatingLabelText="Time value here..."
         />
-        {props.maps.map((item) => {
+        {maps.map((item) => {
           let trackingData;
 
-          const result = props.tracking.filter(obj => obj.level === item.level);
+          const result = tracking.filter(obj => obj.level === item.level);
 
           if (result && result !== undefined) {
             trackingData = result;
@@ -85,7 +90,8 @@ Tracking.propTypes = {
 Tracking.contextTypes = { setTitle: PropTypes.func.isRequired };
 
 export default connect(state => ({
-  filters: state.runtime.pageOptions.tracking.filters,
+  filters: state.filter.pages.tracking.filters,
+  now: state.runtime.initialNow,
 }), {
   filterChange,
 })(withStyles(s)(Tracking));

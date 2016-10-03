@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+/* eslint-disable no-param-reassign*/
 
 import {
   SET_RUNTIME_VARIABLE,
@@ -7,9 +8,15 @@ import {
   SET_FILTER_ERROR,
 } from '../constants';
 
-export function filterChange({ index, value, page }) {
+export function filterChange({ pages, filter, value, page }) {
   return async (dispatch, getState, { graphqlRequest }) => {
     const state = getState();
+
+    if (pages === undefined) {
+      pages = state.filter.pages;
+      const index = pages[page].filters.findIndex((el) => el.enum === filter.enum);
+      pages[page].filters[index].defaultValue = value;
+    }
 
     dispatch({
       type: SET_RUNTIME_VARIABLE,
@@ -19,15 +26,21 @@ export function filterChange({ index, value, page }) {
       },
     });
 
+    dispatch({
+      type: SET_FILTER_START,
+      payload: {
+        pages,
+      },
+    });
+
     try {
-      const pageOptions = state.runtime.pageOptions;
-      pageOptions[page].filters[index].defaultValue = value;
+      const data = '5';
 
       dispatch({
-        type: SET_RUNTIME_VARIABLE,
+        type: SET_FILTER_SUCCESS,
         payload: {
-          name: 'pageOptions',
-          value: pageOptions,
+          pages,
+          data,
         },
       });
       // const { data } = await graphqlRequest(query, { locale });
@@ -52,6 +65,7 @@ export function filterChange({ index, value, page }) {
       dispatch({
         type: SET_FILTER_ERROR,
         payload: {
+          pages,
           error,
         },
       });

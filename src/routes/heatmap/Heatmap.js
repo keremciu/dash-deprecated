@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -6,22 +7,20 @@ import { SelectField, MenuItem } from 'material-ui';
 import s from './Heatmap.css';
 import Map from '../../components/Map/Map.js';
 import { filterChange } from '../../actions/filter';
-// import { setLocale } from '../../actions/intl';
 
 const title = 'Heatmap';
 const page = 'heatmap';
 
-function Heatmap({filters, maps, now, heatmap, filterChange}) {
-  // const data = filters.heatmap.filters;
-  // context.setTitle(title);
+function Heatmap({filters, maps, now, heatmap, filterChange}, context) {
+  context.setTitle(title);
   return (
     <div className={s.root}>
       <div className={s.container}>
         <h2 className="font-light text-center">Showing heatmap data for</h2>
         {filters.map(filter => (
           <SelectField
-            onChange={(event, index, value) => {
-              filterChange({ index, value, page });
+            onChange={(event, key, value) => {
+              filterChange({ filter, value, page });
               event.preventDefault();
             }}
             value={filter.defaultValue !== undefined ? filter.defaultValue : -99}
@@ -64,7 +63,7 @@ Heatmap.propTypes = {
       text: PropTypes.string.isRequired,
     })).isRequired,
   })).isRequired,
-  setLocale: PropTypes.func.isRequired,
+  filterChange: PropTypes.func.isRequired,
   maps: PropTypes.arrayOf(PropTypes.shape({
     level: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -82,7 +81,7 @@ Heatmap.propTypes = {
 Heatmap.contextTypes = { setTitle: PropTypes.func.isRequired };
 
 export default connect(state => ({
-  filters: state.runtime.pageOptions.heatmap.filters,
+  filters: state.filter.pages.heatmap.filters,
   now: state.runtime.initialNow,
 }), {
   filterChange,
