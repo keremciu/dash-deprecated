@@ -1,0 +1,28 @@
+@import '../variables.css';
+
+:global(.marker-icon) {
+  height: 40px;
+  width: 40px;
+}
+
+:global(.marker-icon-svg) {
+  width: 28px;
+  height: 42px;
+}
+
+:root {
+}
+
+.root {
+}
+
+.map {
+  height: 300px;
+}
+
+.mapCard {
+  float: left;
+  width: 30%;
+  margin-right: 2%;
+  margin-bottom: 2%;
+}
